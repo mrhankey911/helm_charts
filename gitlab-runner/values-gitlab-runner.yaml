@@ -77,6 +77,11 @@ runners:
           mount_path = "/var/run/docker.sock"
           read_only = true
           host_path = "/var/run/docker.sock"
+        [[runners.kubernetes.volumes.hosts]]
+          name = "etchosts"
+          mount_path = "/etc/hosts"
+          read_only = true
+          host_path = "/etc/hosts"
   cache: {}
 
   builds: {}

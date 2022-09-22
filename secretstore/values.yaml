@@ -1,0 +1,23 @@
+# Default values for secretstore.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+vaultURL: ""
+vaultKVName: "applications"
+vaultKVVersion: "v2"
+vaultToken: ""
+vaultBackendName: "vault-backend"
+
+imageCredentials:
+  registry: "production-harbor.usd-xtz.com/"
+  username: ""
+  password: ""
+  email: someone@host.com
+
+
+
+
+
+# Example run 
+#
+# helm upgrade secretstore secretstore/ --values secretstore/values.yaml --set vaultToken=$(echo set_here_token |base64) --set vaultURL= --set imageCredentials.username= --set imageCredentials.password=

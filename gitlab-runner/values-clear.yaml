@@ -1,0 +1,113 @@
+image:
+  registry: registry.gitlab.com
+  image: gitlab-org/gitlab-runner
+
+imagePullPolicy: IfNotPresent
+
+terminationGracePeriodSeconds: 3600
+
+concurrent: 10
+
+checkInterval: 30
+
+sessionServer:
+  enabled: false
+
+rbac:
+  create: false
+  rules: []
+  clusterWideAccess: false
+
+  podSecurityPolicy:
+    enabled: false
+    resourceNames:
+    - gitlab-runner
+
+metrics:
+  enabled: false
+  portName: metrics
+  port: 9252
+  serviceMonitor:
+    enabled: false
+
+
+service:
+  enabled: false
+  type: ClusterIP
+
+runners:
+  config: |
+    [[runners]]
+      [runners.kubernetes]
+        namespace = "{{.Release.Namespace}}"
+        image = "ubuntu:16.04"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  cache: {}
+
+
+
+
+
+  builds: {}
+
+  services: {}
+
+  helpers: {}
+
+
+
+
+
+
+
+
+
+
+
+securityContext:
+  runAsUser: 100
+  fsGroup: 65533
+
+
+resources: {}
+
+affinity: {}
+
+nodeSelector: {}
+
+tolerations: []
+
+
+hostAliases: []
+
+podAnnotations: {}
+
+podLabels: {}
+
+
+priorityClassName: ""
+
+secrets: []
+
+configMaps: {}
+
+volumeMounts: []
+
+volumes: []

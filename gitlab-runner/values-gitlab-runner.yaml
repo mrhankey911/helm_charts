@@ -1,0 +1,114 @@
+# Example run
+#
+# helm upgrade gitlab-runner gitlab-runner/ --values gitlab-runner/values-gitlab-runner.yaml --set name="stage-group-gitlab-runner"  --set gitlabUrl=https://gitlab.com,runnerRegistrationToken=
+
+image:
+  registry: registry.gitlab.com
+  image: gitlab-org/gitlab-runner
+
+imagePullPolicy: IfNotPresent
+
+terminationGracePeriodSeconds: 3600
+
+concurrent: 10
+
+checkInterval: 30
+
+sessionServer:
+  enabled: false
+
+  #global:
+  #  serviceAccount:
+  #    name: gitlab-runer
+
+rbac:
+  create: true
+  rules: 
+  - apiGroups: ["*"]
+    resources: ["*"]
+    verbs: ["*"]
+
+  resources: ['*']
+  verbs: ['*']
+  #resources: ['secrets', 'configmaps', 'pods', 'deployments', 'pods/attach', 'pods/exec']
+  #verbs: ['create', 'update', 'get', 'list', 'watch', 'delete', 'deletecollection', 'patch']
+  clusterWideAccess: false
+
+  podSecurityPolicy:
+    enabled: false
+    resourceNames:
+    - gitlab-runner
+
+metrics:
+  enabled: false
+  portName: metrics
+  port: 9252
+  serviceMonitor:
+    enabled: false
+
+service:
+  enabled: false
+  type: ClusterIP
+
+runners:
+  config: |
+    [[runners]]
+      name = ""
+      #url = "https://gitlab.com"
+      #token = ""
+      executor = "kubernetes"
+      [runners.kubernetes]
+        namespace = "default"
+        #namespace_overwrite_allowed = "default"
+        #bearer_token_overwrite_allowed = true
+        privileged = true
+        image = "ubuntu:16.04"
+        cpu_limit = "1"
+        memory_limit = "1Gi"
+        service_cpu_limit = "1"
+        service_memory_limit = "1Gi"
+        helper_cpu_limit = "500m"
+        helper_memory_limit = "100Mi"
+        poll_interval = 5
+        poll_timeout = 3600
+        dns_policy = "cluster-first"
+        [[runners.kubernetes.volumes.host_path]]
+          name = "dockersock"
+          mount_path = "/var/run/docker.sock"
+          read_only = true
+          host_path = "/var/run/docker.sock"
+  cache: {}
+
+  builds: {}
+
+  services: {}
+
+  helpers: {}
+
+securityContext:
+  runAsUser: 100
+  fsGroup: 65533
+
+resources: {}
+
+affinity: {}
+
+nodeSelector: {}
+
+tolerations: []
+
+hostAliases: []
+
+podAnnotations: {}
+
+podLabels: {}
+
+priorityClassName: ""
+
+secrets: []
+
+configMaps: {}
+
+volumeMounts: []
+
+volumes: []

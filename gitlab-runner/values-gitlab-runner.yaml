@@ -58,6 +58,9 @@ runners:
       #token = ""
       executor = "kubernetes"
       [runners.kubernetes]
+        [[runners.kubernetes.host_aliases]]
+          ip = "172.19.2.9"
+          hostnames = ["gitlab.istock.info"]
         namespace = "default"
         #namespace_overwrite_allowed = "default"
         #bearer_token_overwrite_allowed = true
@@ -77,9 +80,7 @@ runners:
           mount_path = "/var/run/docker.sock"
           read_only = true
           host_path = "/var/run/docker.sock"
-        [[runners.kubernetes.host_aliases]]
-          ip = "172.19.2.9"
-          hostnames = ["gitlab.istock.info"]
+
   cache: {}
 
   builds: {}

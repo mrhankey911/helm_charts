@@ -77,6 +77,9 @@ runners:
           mount_path = "/var/run/docker.sock"
           read_only = true
           host_path = "/var/run/docker.sock"
+        [[runners.kubernetes.host_aliases]]
+          ip = "172.19.2.9"
+          hostnames = ["gitlab.istock.info"]
   cache: {}
 
   builds: {}

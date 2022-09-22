@@ -58,9 +58,6 @@ runners:
       #token = ""
       executor = "kubernetes"
       [runners.kubernetes]
-        [[runners.kubernetes.host_aliases]]
-          ip = "172.19.2.9"
-          hostnames = ["gitlab.istock.info"]
         namespace = "default"
         #namespace_overwrite_allowed = "default"
         #bearer_token_overwrite_allowed = true
@@ -74,7 +71,7 @@ runners:
         helper_memory_limit = "100Mi"
         poll_interval = 5
         poll_timeout = 3600
-        dns_policy = "cluster-first"
+        dns_policy = "none"
         [[runners.kubernetes.volumes.host_path]]
           name = "dockersock"
           mount_path = "/var/run/docker.sock"
